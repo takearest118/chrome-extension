@@ -1,6 +1,7 @@
 {
 	"name": "Wish",
 	"version": "1.0",
+	"homepage_url": "http://www.wish.com/chrome-apps",
 	"background": {"scripts": ["background.js"]},
 	"content_scripts": [
 		{
