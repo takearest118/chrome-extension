@@ -3,18 +3,6 @@
 	"version": "1.0",
 	"homepage_url": "http://www.wish.com/chrome-apps",
 	"background": {"scripts": ["background.js"]},
-	"content_scripts": [
-		{
-			"matches": [
-				"https://www.google.co.kr/",
-				"http://search.naver.com/"
-			],
-			"all_frames": false,
-			"js": [
-				"search_injection.js"
-			]
-		}
-	],
 	"manifest_version": 2,
 	"description": "With Wish you can discover cool new products, share the products you love, and unlock exclusive rewards.",
 	"browser_action": {
@@ -31,6 +19,8 @@
 	"permissions": [
 		"http://www.wish.com/",
 		"https://www.google.co.kr/",
+		"http://search.naver.com/",
+		"http://search.daum.net/",
 		"tabs"
 	]
 }
