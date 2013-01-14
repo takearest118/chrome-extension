@@ -4,22 +4,26 @@
 	//jquery_script.src = "http://code.jquery.com/jquery-1.8.3.min.js";
 	//document.getElementsByTagName("head")[0].appendChild(jquery_script);
 
-	var wishtag = document.createElement("div");
-	wishtag.setAttribute("id", "wishBlock");
-	wishtag.setAttribute("style", "display: block; padding: 12px; background: #fafafa; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;");
-	
-	var h2 = document.createElement("h2");
-	h2.appendChild(document.createTextNode("Found xxxx things on Wish"));
-	wishtag.appendChild(h2);
+	if(document.getElementById("wishBlock")) {
+		alert("exist <wishBlock>");
+	}else {
+		var wishtag = document.createElement("div");
+		wishtag.setAttribute("id", "wishBlock");
+		wishtag.setAttribute("style", "display: block; padding: 12px; background: #fafafa; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;");
+		
+		var h2 = document.createElement("h2");
+		h2.appendChild(document.createTextNode("Found xxxx things on Wish"));
+		wishtag.appendChild(h2);
 
-	var ul = document.createElement("ul");
-	wishtag.appendChild(ul);
+		var ul = document.createElement("ul");
+		wishtag.appendChild(ul);
 
-	var div = document.createElement("div");
-	div.setAttribute("style", "clear:both;");
-	wishtag.appendChild(div);
+		var div = document.createElement("div");
+		div.setAttribute("style", "clear:both;");
+		wishtag.appendChild(div);
 
-	var e = document.getElementById("content");
-	e.insertBefore(wishtag, document.getElementById("relate"));
-	alert("naver check routine");
+		var e = document.getElementById("content");
+		e.insertBefore(wishtag, e.firstChild);
+		alert("naver check routine");
+	}
 })();
