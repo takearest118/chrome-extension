@@ -16,6 +16,12 @@
 		"48": "icon.png",
 		"16": "icon.png"
 	},
+	"content_scripts": [
+		{
+			"matches": ["http://*/*", "https://*/*"],
+			"js": ["jquery-1.8.3.min.js"]
+		}
+	],
 	"permissions": [
 		"http://www.wish.com/",
 		"https://www.google.co.kr/",
