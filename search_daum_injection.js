@@ -56,10 +56,10 @@
 
 	if(document.getElementById("wishBlock")) {
 	}else {
-		var p = params(document.URL);
+		var p = params(decodeURIComponent(document.URL));
 		var xhr = new XMLHttpRequest();
 		// sync request
-		xhr.open("GET", "http://www.wish.com/api/search?query="+encodeURIComponent(p['q'])+"&transform=true", false);
+		xhr.open("GET", "http://www.wish.com/api/search?query="+p['q']+"&transform=true", false);
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState == 4) {
 				if(xhr.status = 200) {
