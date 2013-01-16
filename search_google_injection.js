@@ -36,9 +36,10 @@
 
 		var header = document.createElement("div");
 		header.setAttribute("id", "wishHeader");
+		header.setAttribute("style", "padding: 0 0 10px 0; background-repeat: no-repeat; background-position: right top; background-image: url('"+ chrome.extension.getURL("icon.png") +"');");
 		var a = document.createElement("a");
 		a.setAttribute("href", "http://www.wish.com/search/" + search_keyword);
-		a.setAttribute("style", "text-decoration: none;");
+		a.setAttribute("style", "text-decoration: none; font-weight: bolder; font-size: medium; color: #3a73b6;");
 		a.appendChild(document.createTextNode("Found " + result.data.num_found + " results on Wish"));
 		header.appendChild(a);
 		wt.appendChild(header);
