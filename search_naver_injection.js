@@ -19,7 +19,7 @@
 		var div = document.createElement("div");
 
 		var li = document.createElement("li");
-		li.setAttribute("style", "display: inline-block;");
+		li.setAttribute("style", "display: inline-block; padding: 5px;");
 
 		li.appendChild(div);
 		div.appendChild(a);
@@ -28,23 +28,34 @@
 		return li;
 	};
 
-	var wishtag = function(result) {
-
+	var wishtag = function(search_keyword, result) {
 		var wt = document.getElementById("wishBlock");
 		wt = document.createElement("div");
 		wt.setAttribute("id", "wishBlock");
-		wt.setAttribute("style", "display: block; padding: 12px; background: #fafafa; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;");
+		wt.setAttribute("style", "display: block; padding: 20px 20px 16px; background: #fafafa; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;");
 
-		var h2 = document.createElement("h2");
-		h2.appendChild(document.createTextNode("Found "+ result.data.num_found  +" results on Wish"));
-		wt.appendChild(h2);
+		var header = document.createElement("div");
+		header.setAttribute("id", "wishHeader");
+		var a = document.createElement("a");
+		a.setAttribute("href", "http://www.wish.com/search/" + search_keyword);
+		a.setAttribute("style", "text-decoration: none;");
+		a.appendChild(document.createTextNode("Found " + result.data.num_found + " results on Wish"));
+		header.appendChild(a);
+		wt.appendChild(header);
+
+		var body = document.createElement("div");
+		body.setAttribute("id", "wishBody");
+		body.setAttribute("style", "vertical_align: middle;");
+		wt.appendChild(body);
 
 		var ul = document.createElement("ul");
-		wt.appendChild(ul);
+		ul.setAttribute("style", "display: initial; padding:5px;");
+		body.appendChild(ul);
 
 		for(var idx in result.data.results) {
-			ul.appendChild(itemtag("http://www.wish.com/#cid="+result.data.results[idx].id, result.data.results[idx].small_picture));
+			ul.appendChild(itemtag("http://www.wish.com/search/" + search_keyword + "#cid="+result.data.results[idx].id, result.data.results[idx].small_picture));
 			//ul.appendChild(itemtag("http://www.wish.com/#cid="+result.data.results[idx].id, result.data.results[idx].display_picture));
+			//ul.appendChild(itemtag("http://www.wish.com/#cid="+result.data.results[idx].id, result.data.results[idx].img_url));
 		}
 
 		var div = document.createElement("div");
@@ -65,8 +76,8 @@
 				if(xhr.status = 200) {
 					var results = JSON.parse(xhr.response);
 					if(results.data.num_found) { 
-					var e = document.getElementById("content");
-					e.insertBefore(wishtag(results), e.firstChild);
+						var e = document.getElementById("content");
+						e.insertBefore(wishtag(p['query'], results), e.firstChild);
 					}
 				}
 			}

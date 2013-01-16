@@ -19,12 +19,8 @@
 	"content_scripts": [
 		{
 			"matches": ["http://*/*", "https://*/*"],
-			"js": ["jquery-1.9.0.min.js"],
-			"css": ["wishblock.css"]
+			"js": ["jquery-1.9.0.min.js"]
 		}
-	],
-	"web_accessible_resources": [
-		"wishblock.html"
 	],
 	"permissions": [
 		"http://www.wish.com/",

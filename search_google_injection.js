@@ -53,7 +53,7 @@
 		body.appendChild(ul);
 
 		for(var idx in result.data.results) {
-			ul.appendChild(itemtag("http://www.wish.com/#cid="+result.data.results[idx].id, result.data.results[idx].small_picture));
+			ul.appendChild(itemtag("http://www.wish.com/search/" + search_keyword + "#cid="+result.data.results[idx].id, result.data.results[idx].small_picture));
 			//ul.appendChild(itemtag("http://www.wish.com/#cid="+result.data.results[idx].id, result.data.results[idx].display_picture));
 			//ul.appendChild(itemtag("http://www.wish.com/#cid="+result.data.results[idx].id, result.data.results[idx].img_url));
 		}
