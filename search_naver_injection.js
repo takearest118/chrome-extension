@@ -46,16 +46,15 @@
 
 		var body = document.createElement("div");
 		body.setAttribute("id", "wishBody");
-		body.setAttribute("style", "vertical_align: middle;");
 		wt.appendChild(body);
 
 		var ul = document.createElement("ul");
-		ul.setAttribute("style", "display: initial; padding:5px;");
+		ul.setAttribute("style", "display: initial; padding:5px; vertical_align: middle;");
 		body.appendChild(ul);
 
-		for(var i=0; i<3; i++) {
+		for(var i=0; i<8; i++) {
 			if(result.data.results[i]) {
-				ul.appendChild(itemtag("http://www.wish.com/search/" + search_keyword + "#cid="+result.data.results[i].id, result.data.results[i].display_picture));
+				ul.appendChild(itemtag("http://www.wish.com/search/" + search_keyword + "#cid="+result.data.results[i].id, result.data.results[i].small_picture));
 			}
 		}
 		/*

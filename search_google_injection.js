@@ -50,7 +50,7 @@
 		wt.appendChild(body);
 
 		var ul = document.createElement("ul");
-		ul.setAttribute("style", "display: initial; padding:5px;");
+		ul.setAttribute("style", "display: initial; padding:5px; vertical_align: middle;");
 		body.appendChild(ul);
 
 		for(var i=0; i<5; i++) {
