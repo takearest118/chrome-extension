@@ -53,11 +53,18 @@
 		ul.setAttribute("style", "display: initial; padding:5px;");
 		body.appendChild(ul);
 
+		for(var i=0; i<5; i++) {
+			if(result.data.results[i]) {
+				ul.appendChild(itemtag("http://www.wish.com/search/" + search_keyword + "#cid="+result.data.results[i].id, result.data.results[i].small_picture));
+			}
+		}
+		/*
 		for(var idx in result.data.results) {
 			ul.appendChild(itemtag("http://www.wish.com/search/" + search_keyword + "#cid="+result.data.results[idx].id, result.data.results[idx].small_picture));
 			//ul.appendChild(itemtag("http://www.wish.com/#cid="+result.data.results[idx].id, result.data.results[idx].display_picture));
 			//ul.appendChild(itemtag("http://www.wish.com/#cid="+result.data.results[idx].id, result.data.results[idx].img_url));
 		}
+		*/
 
 		var div = document.createElement("div");
 		div.setAttribute("style", "clear:both;");
