@@ -15,6 +15,7 @@
 
 		var a = document.createElement("a");
 		a.setAttribute("href", link_src);
+		a.setAttribute("target", "_blank");
 
 		var div = document.createElement("div");
 
@@ -36,10 +37,10 @@
 
 		var header = document.createElement("div");
 		header.setAttribute("id", "wishHeader");
-		header.setAttribute("style", "padding: 0 0 10px 0; background-repeat: no-repeat; background-position: right top; background-image: url('"+ chrome.extension.getURL("icon.png") +"');");
+		header.setAttribute("style", "padding: 0 0 10px 0; background-repeat: no-repeat; background-position: right top; background-image: url('"+ chrome.extension.getURL("logo.png") +"');");
 		var a = document.createElement("a");
 		a.setAttribute("href", "http://www.wish.com/search/" + search_keyword);
-		a.setAttribute("style", "text-decoration: none; font-weight: bolder; font-size: medium; color: #3a73b6;");
+		a.setAttribute("style", "text-decoration: none; font-weight: normal; font-size: medium;");
 		a.appendChild(document.createTextNode("Found " + result.data.num_found + " results on Wish"));
 		header.appendChild(a);
 		wt.appendChild(header);
@@ -57,13 +58,6 @@
 				ul.appendChild(itemtag("http://www.wish.com/search/" + search_keyword + "#cid="+result.data.results[i].id, result.data.results[i].small_picture));
 			}
 		}
-		/*
-		for(var idx in result.data.results) {
-			ul.appendChild(itemtag("http://www.wish.com/search/" + search_keyword + "#cid="+result.data.results[idx].id, result.data.results[idx].small_picture));
-			//ul.appendChild(itemtag("http://www.wish.com/#cid="+result.data.results[idx].id, result.data.results[idx].display_picture));
-			//ul.appendChild(itemtag("http://www.wish.com/#cid="+result.data.results[idx].id, result.data.results[idx].img_url));
-		}
-		*/
 
 		var div = document.createElement("div");
 		div.setAttribute("style", "clear:both;");
@@ -83,8 +77,7 @@
 				if(xhr.status = 200) {
 					var results = JSON.parse(xhr.response);
 					if(results.data.num_found) { 
-						var e = document.getElementById("content");
-						e.insertBefore(wishtag(p['query'], results), e.firstChild);
+						$("#content").prepend(wishtag(p['query'], results));
 					}
 				}
 			}
