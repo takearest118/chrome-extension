@@ -1,10 +1,13 @@
 (function() {
 	var params = function(url) {
 		ret = {};
-		var opts = url.split("?")[1].split("&");
-		for(var pair in opts) {
-			var temp = opts[pair].split("=");
-			ret[temp[0]] = temp[1];
+		var token = url.match(/#|\?/)[0];
+		if(token) {
+			var opts = url.split(token)[1].split("&");
+			for(var pair in opts) {
+				var temp = opts[pair].split("=");
+				ret[temp[0]] = temp[1];
+			}
 		}
 		return ret;
 	}
