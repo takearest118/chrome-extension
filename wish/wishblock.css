@@ -1,0 +1,23 @@
+#blockWish {
+	display: block;
+	padding: 12px;
+	background: #fafafa;
+}
+
+#wishHeader a {
+	text-decoration: none;
+}
+
+#wishBody {
+	vertical_align: middle;
+}
+
+#wishBody ul {
+	display: initial;
+	padding: 5px;
+}
+
+#wishBody ul li {
+	display: inline-block;
+	padding: 5px;
+}
