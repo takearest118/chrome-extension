@@ -12,13 +12,10 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 
 function checkNotification() {
 	var api = 'http://www.wish.com/api/search';		// TODO it needs to exchange api for notification count
-	var interval = 60;		// seconds
-
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState != 4) return;
 		//if(xhr.status != 200) return;				// TODO must be 400 error code
-		window.setInterval(checkNotification, interval * 1000);
 		var results = JSON.parse(xhr.response);
 		if(results.noti_count == undefined) {
 			chrome.browserAction.setBadgeText({text: '0'});
@@ -31,3 +28,4 @@ function checkNotification() {
 }
 
 checkNotification();
+window.setInterval(checkNotification, 60 * 1000);
