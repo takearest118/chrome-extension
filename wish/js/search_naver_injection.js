@@ -37,7 +37,7 @@
 
 		var header = document.createElement("div");
 		header.setAttribute("id", "wishHeader");
-		header.setAttribute("style", "padding: 0 0 10px 0; background-repeat: no-repeat; background-position: right top; background-image: url('"+ chrome.extension.getURL("logo.png") +"');");
+		header.setAttribute("style", "padding: 0 0 10px 0; background-repeat: no-repeat; background-position: right top; background-image: url('"+ chrome.extension.getURL("./res/logo.png") +"');");
 		var a = document.createElement("a");
 		a.setAttribute("href", "http://www.wish.com/search/" + search_keyword);
 		a.setAttribute("target", "_blank");

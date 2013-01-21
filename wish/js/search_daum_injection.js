@@ -1,13 +1,10 @@
 (function() {
 	var params = function(url) {
 		ret = {};
-		var token = url.match(/#|\?/)[0];
-		if(token) {
-			var opts = url.split(token)[1].split("&");
-			for(var pair in opts) {
-				var temp = opts[pair].split("=");
-				ret[temp[0]] = temp[1];
-			}
+		var opts = url.split("?")[1].split("&");
+		for(var pair in opts) {
+			var temp = opts[pair].split("=");
+			ret[temp[0]] = temp[1];
 		}
 		return ret;
 	}
@@ -40,11 +37,11 @@
 
 		var header = document.createElement("div");
 		header.setAttribute("id", "wishHeader");
-		header.setAttribute("style", "padding: 0 0 10px 0; background-repeat: no-repeat; background-position: right top; background-image: url('"+ chrome.extension.getURL("logo.png") +"');");
+		header.setAttribute("style", "padding: 0 0 10px 0; background-repeat: no-repeat; background-position: right top; background-image: url('"+ chrome.extension.getURL("./res/logo.png") +"');");
 		var a = document.createElement("a");
 		a.setAttribute("href", "http://www.wish.com/search/" + search_keyword);
 		a.setAttribute("target", "_blank");
-		a.setAttribute("style", "text-decoration: none; font-weight: bolder; font-size: medium;");
+		a.setAttribute("style", "text-decoration: none; font-weight: normal; font-size: medium;");
 		a.appendChild(document.createTextNode("Found " + result.data.num_found + " results on Wish"));
 		header.appendChild(a);
 		wt.appendChild(header);
@@ -58,7 +55,7 @@
 		ul.setAttribute("style", "display: initial; padding:5px; vertical_align: middle;");
 		body.appendChild(ul);
 
-		for(var i=0; i<5; i++) {
+		for(var i=0; i<8; i++) {
 			if(result.data.results[i]) {
 				ul.appendChild(itemtag("http://www.wish.com/search/" + search_keyword + "#cid="+result.data.results[i].id, result.data.results[i].small_picture));
 			}
@@ -82,7 +79,7 @@
 				if(xhr.status = 200) {
 					var results = JSON.parse(xhr.response);
 					if(results.data.num_found) { 
-						$("#center_col").prepend(wishtag(p['q'], results));
+						$(".inner_article").prepend(wishtag(p['q'], results));
 					}
 				}
 			}

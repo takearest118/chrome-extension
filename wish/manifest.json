@@ -1,29 +1,35 @@
 {
 	"name": "Wish",
-	"version": "1.0",
+	"version": "1.1",
+
 	"homepage_url": "http://www.wish.com/chrome-apps",
-	"background": {"scripts": ["background.js"]},
+	"background": {"scripts": ["./js/background.js"]},
 	"manifest_version": 2,
 	"description": "With Wish you can discover cool new products, share the products you love, and unlock exclusive rewards.",
 	"browser_action": {
 		"default_title": "Wish",
-		"default_icon": "icon.png",
+		"default_icon": "./res/icon.png",
 		"name": "Click to execute Wish's extension function"
 	},
 	"icons" : {
-		"256": "icon.png",
-		"128": "icon.png",
-		"48": "icon.png",
-		"16": "icon.png"
+		"256": "./res/icon.png",
+		"128": "./res/icon.png",
+		"48": "./res/icon.png",
+		"16": "./res/icon.png"
 	},
 	"content_scripts": [
 		{
 			"matches": ["http://*/*", "https://*/*"],
-			"js": ["jquery-1.9.0.min.js"]
+			"js": [
+				"./js/jquery-1.9.0.min.js",
+				"./js/search_google_injection.js",
+				"./js/search_naver_injection.js",
+				"./js/search_daum_injection.js"
+			]
 		}
 	],
 	"web_accessible_resources": [
-		"logo.png"
+		"res/logo.png"
 	],
 	"permissions": [
 		"http://www.wish.com/",
