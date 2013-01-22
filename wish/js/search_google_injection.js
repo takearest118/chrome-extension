@@ -1,9 +1,9 @@
 (function() {
 	var params = function(url) {
 		ret = {};
-		var token = url.match(/#|\?/)[0];
+		var token = url.match(/#|\?/);
 		if(token) {
-			var opts = url.split(token)[1].split("&");
+			var opts = url.split(token[0])[1].split("&");
 			for(var pair in opts) {
 				var temp = opts[pair].split("=");
 				ret[temp[0]] = temp[1];

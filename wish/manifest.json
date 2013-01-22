@@ -21,10 +21,7 @@
 		{
 			"matches": ["http://*/*", "https://*/*"],
 			"js": [
-				"./js/jquery-1.9.0.min.js",
-				"./js/search_google_injection.js",
-				"./js/search_naver_injection.js",
-				"./js/search_daum_injection.js"
+				"./js/jquery-1.9.0.min.js"
 			]
 		}
 	],
