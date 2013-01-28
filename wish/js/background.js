@@ -10,6 +10,11 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 	}
 });
 
+chrome.browserAction.onClicked.addListener(function(tab) {
+	var facebook_app_url = 'http://www.facebook.com/apps/application.php?id=227791440613076';
+	chrome.tabs.create({'url': facebook_app_url});
+});
+
 function checkNotification() {
 	var api = 'http://www.wish.com/api/search';		// TODO it needs to exchange api for notification count
 	var xhr = new XMLHttpRequest();

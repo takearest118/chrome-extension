@@ -7,9 +7,8 @@
 	"manifest_version": 2,
 	"description": "With Wish you can discover cool new products, share the products you love, and unlock exclusive rewards.",
 	"browser_action": {
-		"default_title": "Wish",
-		"default_icon": "./res/icon.png",
-		"name": "Click to execute Wish's extension function"
+		"default_title": "Click to execute Wish's extension function",
+		"default_icon": "./res/icon.png"
 	},
 	"icons" : {
 		"256": "./res/icon.png",
