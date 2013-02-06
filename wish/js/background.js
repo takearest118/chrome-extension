@@ -1,17 +1,13 @@
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-	if(changeInfo.status == 'loading') {
-		if(/^http[s]?:\/\/www\.google\.co(?:m|\.[a-z]+)(\/webhp|\/search|\/#|\/?$)/.test(tab.url)) {
-			chrome.tabs.executeScript(tab.id, {file: "js/search_google_injection.js"});
-		}else if(/^http?:\/\/search\.naver\.co(?:m|\.[a-z]+)(\/search\.naver|\/#|\/?$)/.test(tab.url)) {
-			chrome.tabs.executeScript(tab.id, {file: "js/search_naver_injection.js"});
-		}else if(/^http?:\/\/search\.daum\.net(\/search|\/#|\/?$)/.test(tab.url)) {
-			chrome.tabs.executeScript(tab.id, {file: "js/search_daum_injection.js"});
-		}
-	}
-});
+function getWishUrl() {
+	return 'http://www.wish.com/';
+}
+
+function isWishUrl(url) {
+	return url.indexOf(getWishUrl()) == 0;
+}
 
 function checkLogin() {
-	var api = 'http://www.wish.com/api/search';		// TODO it needs to exchange api for notification count
+	var api = getWishUrl() + 'api/search';		// TODO it needs to exchange api for notification count
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState != 4) return;
@@ -20,17 +16,41 @@ function checkLogin() {
 		if(results.noti_count == undefined) {
 			//var facebook_app_url = 'http://www.facebook.com/apps/application.php?id=227791440613076';
 			//chrome.tabs.create({'url': facebook_app_url});
-			var wish_logout_url = 'http://www.wish.com/?logout_reason=1';
-			chrome.tabs.create({'url': wish_logout_url});
+			chrome.tabs.create({'url': getWishUrl() + '?logout_reason=1'});
 		}else {
+			chrome.tabs.create({'url': getWishUrl()});
 		}
 	}
 	xhr.open("GET", api, true);
 	xhr.send();
 }
 
+//Search injection and update browser icon
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+	if(changeInfo.status == 'loading') {
+		if(/^http[s]?:\/\/www\.google\.co(?:m|\.[a-z]+)(\/webhp|\/search|\/#|\/?$)/.test(tab.url)) {
+			chrome.tabs.executeScript(tab.id, {file: "js/search_google_injection.js"});
+		}else if(/^http?:\/\/search\.naver\.co(?:m|\.[a-z]+)(\/search\.naver|\/#|\/?$)/.test(tab.url)) {
+			chrome.tabs.executeScript(tab.id, {file: "js/search_naver_injection.js"});
+		}else if(/^http?:\/\/search\.daum\.net(\/search|\/#|\/?$)/.test(tab.url)) {
+			chrome.tabs.executeScript(tab.id, {file: "js/search_daum_injection.js"});
+		}else if(/^http?:\/\/www\.wish\.com/.test(tab.url)) {
+			updateBrowserIcon();
+		}
+	}
+});
+
 chrome.browserAction.onClicked.addListener(function(tab) {
-	checkLogin();
+	chrome.tabs.getAllInWindow(undefined, function(tabs) {
+		for(var i=0, tab; tab = tabs[i]; i++) {
+			if(tab.url && isWishUrl(tab.url)) {
+				chrome.tabs.update(tab.id, {selected: true});
+				return;
+			}
+		}
+		checkLogin();
+	});
+	updateBrowserIcon();
 });
 
 chrome.contextMenus.create({
@@ -41,23 +61,27 @@ chrome.contextMenus.create({
 
 function clickHandler(info, tab) {
 	if(info.mediaType == "image") {
-		var wish_bookmarklet_url = "https://www.wish.com/bookmarklet?url=" + info.pageUrl + "&img=" + info.srcUrl + "&is_chrome=True";
+		var wish_bookmarklet_url = getWishUrl() + "bookmarklet?url=" + info.pageUrl + "&img=" + info.srcUrl + "&is_chrome=True";
 		chrome.windows.create({'url': wish_bookmarklet_url, 'top': 200, 'left': 200, 'width': 750, 'height': 683, 'focused': true});
 	}else {
 		alert("Not selected image");
 	}
 }
 
-function checkNotification() {
-	var api = 'http://www.wish.com/api/search';		// TODO it needs to exchange api for notification count
+function updateBrowserIcon() {
+	var api = getWishUrl() + 'api/search';		// TODO it needs to exchange api for notification count
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState != 4) return;
 		//if(xhr.status != 200) return;				// TODO must be 400 error code
 		var results = JSON.parse(xhr.response);
 		if(results.noti_count == undefined) {
-			chrome.browserAction.setBadgeText({text: '0'});
+			chrome.browserAction.setIcon({path: "./res/wish_not_logged_in.png"});
+			chrome.browserAction.setBadgeBackgroundColor({color: [190, 190, 190, 230]});
+			chrome.browserAction.setBadgeText({text: '?'});
 		}else {
+			chrome.browserAction.setIcon({path: "./res/wish_logged_in.png"});
+			chrome.browserAction.setBadgeBackgroundColor({color: [208, 0, 24, 255]});
 			chrome.browserAction.setBadgeText({text: results.noti_count+''});
 		}
 	}
@@ -65,5 +89,5 @@ function checkNotification() {
 	xhr.send();
 }
 
-checkNotification();
-window.setInterval(checkNotification, 60 * 1000);
+updateBrowserIcon();
+window.setInterval(updateBrowserIcon, 60 * 1000);
