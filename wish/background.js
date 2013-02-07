@@ -1,3 +1,50 @@
+var animationFrames = 36;
+var animationSpeed = 10;	// ms
+var canvas = document.getElementById('canvas');
+var canvasContext = canvas.getContext('2d');
+var loggedInImage = document.getElementById('logged_in');
+var rotation = 0;
+var loadingAnimation = new LoadingAnimation();
+
+function LoadingAnimation() {
+	this.timerId_ = 0;
+	this.maxCount = 8;
+	this.current_ = 0;
+	this.maxDot_ = 4;
+}
+
+function ease(x) {
+	return (1-Math.sin(Math.PI/2+x*Math.PI))/2;
+}
+
+function animateFlip() {
+	rotation += 1/animationFrames;
+	drawIconAtRotation();
+
+	if(rotation <= 1) {
+		setTimeout(animateFlip, animationSpeed);
+	}else {
+		rotation = 0;
+		updateBrowserIcon();
+	}
+}
+
+function drawIconAtRotation() {
+	canvasContext.save();
+	canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+	canvasContext.translate(
+			Math.ceil(canvas.width/2),
+			Math.ceil(canvas.height/2));
+	canvasContext.rotate(2*Math.PI*ease(rotation));
+	canvasContext.drawImage(
+			loggedInImage,
+			-Math.ceil(canvas.width/2),
+			-Math.ceil(canvas.height/2));
+	canvasContext.restore();
+
+	chrome.browserAction.setIcon({imageData: canvasContext.getImageData(0, 0, canvas.width, canvas.height)});
+}
+
 function getWishUrl() {
 	return 'http://www.wish.com/';
 }
@@ -36,6 +83,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 			chrome.tabs.executeScript(tab.id, {file: "js/search_daum_injection.js"});
 		}else if(/^http?:\/\/www\.wish\.com/.test(tab.url)) {
 			updateBrowserIcon();
+			animateFlip();
 		}
 	}
 });
