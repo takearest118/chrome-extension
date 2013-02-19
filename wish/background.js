@@ -89,6 +89,10 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 });
 
 chrome.browserAction.onClicked.addListener(function(tab) {
+	chrome.windows.getCurrent(function(win) {
+		chrome.tabs.captureVisibleTab(win.id, {"format": "png"}, function(imgUrl) {
+		});
+	});
 	chrome.tabs.getAllInWindow(undefined, function(tabs) {
 		for(var i=0, tab; tab = tabs[i]; i++) {
 			if(tab.url && isWishUrl(tab.url)) {
@@ -110,7 +114,7 @@ chrome.contextMenus.create({
 function clickHandler(info, tab) {
 	if(info.mediaType == "image") {
 		var wish_bookmarklet_url = getWishUrl() + "bookmarklet?url=" + info.pageUrl + "&img=" + info.srcUrl + "&is_chrome=True";
-		chrome.windows.create({'url': wish_bookmarklet_url, 'top': 200, 'left': 200, 'width': 750, 'height': 683, 'focused': true});
+		chrome.windows.create({'url': wish_bookmarklet_url, 'focused': true, 'type': 'popup'});
 	}else {
 		alert("Not selected image");
 	}
