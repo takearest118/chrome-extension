@@ -10,7 +10,8 @@
 	"description": "With Wish you can discover cool new products, share the products you love, and unlock exclusive rewards.",
 	"browser_action": {
 		"default_title": "Click to execute Wish's extension function",
-		"default_icon": "./res/wish_not_logged_in.png"
+		"default_icon": "./res/wish_not_logged_in.png",
+		"default_popup": "popup.html"
 	},
 	"icons" : {
 		"256": "./res/icon.png",

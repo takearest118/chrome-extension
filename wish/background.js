@@ -88,21 +88,26 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 	}
 });
 
-chrome.browserAction.onClicked.addListener(function(tab) {
-	chrome.windows.getCurrent(function(win) {
-		chrome.tabs.captureVisibleTab(win.id, {"format": "png"}, function(imgUrl) {
-		});
-	});
-	chrome.tabs.getAllInWindow(undefined, function(tabs) {
-		for(var i=0, tab; tab = tabs[i]; i++) {
-			if(tab.url && isWishUrl(tab.url)) {
-				chrome.tabs.update(tab.id, {selected: true});
-				return;
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+
+	if(request.action == "goto") {
+		chrome.tabs.getAllInWindow(undefined, function(tabs) {
+			for(var i=0, tab; tab = tabs[i]; i++) {
+				if(tab.url && isWishUrl(tab.url)) {
+					chrome.tabs.update(tab.id, {selected: true});
+					return;
+				}
 			}
-		}
-		checkLogin();
-	});
-	updateBrowserIcon();
+			checkLogin();
+		});
+		updateBrowserIcon();
+	}else if(request.action == "selected") {
+		chrome.windows.getCurrent(function(win) {
+			chrome.tabs.captureVisibleTab(win.id, {"format": "png"}, function(dataUrl) {
+				alert(dataUrl);
+			});
+		});
+	}
 });
 
 chrome.contextMenus.create({
